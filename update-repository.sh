@@ -62,13 +62,14 @@ do
         # Signature exists, verify it
         #gpg --quiet --verify "${_file}.sig" 2> /dev/null || EXITCODE=$?
         if (( ! EXITCODE )); then
-          msg2 "File signature verified for file ${_file}."
+          msg2 "Signature verified for file ${_file}."
         else
-          error "File signature was NOT valid for file ${_file}!"
+          error "Signature was NOT valid for file ${_file}!"
           exit 1
         fi
       else
         # Signature missing, create signature file
+        msg2 "Creating missing signature for file ${_file}."
         gpg --quiet --detach-sign --use-agent --no-armor --local-user ${KEYID} "${_file}"
       fi
     done
